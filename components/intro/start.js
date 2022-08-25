@@ -39,8 +39,8 @@ export default function Start({ currentBalance }) {
         {/* image here  */}
         <Image
           src={"/media/coins-image.png"}
-          width={169}
-          height={69}
+          width={189}
+          height={89}
           alt={"Coin Image"}
         />
         <h1 className="wh-text">You have got 200 coins</h1>
@@ -54,7 +54,7 @@ export default function Start({ currentBalance }) {
             setCookie("redirect", "false");
             router.push("/");
           }}
-          className="or-btn"
+          className="or-btn shine"
         >
           {`Play More`}
         </a>
