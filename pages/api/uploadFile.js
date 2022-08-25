@@ -10,13 +10,13 @@ export const config = {
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const result = await UploadFile(req)
-    res.status(200).json(result);
+    res.status(200).json({ method : req.method , result : result});
   }
 }
 
 
 
-async function UploadFile(req, res) {
+function UploadFile(req, res) {
   new Promise((resolve, reject) => {
     const form = new IncomingForm();
 
@@ -51,7 +51,7 @@ async function UploadFile(req, res) {
           }
         }
 
-        fs.rename(oldPath, newPath, async (err) => {
+        fs.rename(oldPath, newPath, (err) => {
           if (err) {
             reject({
               success: false,

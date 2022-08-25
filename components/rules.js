@@ -1,3 +1,4 @@
+import { MdOutlineArrowRight } from "react-icons/md";
 
 export default function fules() {
   return (
@@ -8,7 +9,7 @@ export default function fules() {
                 Contest Rules!
             </h1>
             <li>
-                {/*  icon here   */}
+                <MdOutlineArrowRight />
                 <span>
                     The winners for each quiz will be declared based on
                     the scores they obtain during the participation in the quiz.
@@ -16,21 +17,21 @@ export default function fules() {
 
             </li>
             <li>
-                {/*  icon here   */}
+            <MdOutlineArrowRight />
                 <span>
                     There will be a fixed time for declaring the winners of each quiz
                 </span>
             </li>
 
             <li>
-                {/*  icon here   */}
+                <MdOutlineArrowRight />
                 <span>
                     You will have overall 60 seconds to solve as many as questions from 20 questions in quiz.
                 </span>
             </li>
 
             <li>
-                {/*  icon here   */}
+                <MdOutlineArrowRight />
                 <span>
                     There will be 4 options given below each question and one will be the answer for it out of them.
                 </span>
@@ -51,14 +52,14 @@ export default function fules() {
             </li>
 
             <li>
-                {/*  icon here   */}
+                <MdOutlineArrowRight />
                 <span>
                     Do not forget to use the lifelines in case if you are stuck during the contest.
                 </span>
             </li>
 
             <li>
-                {/*  icon here   */}
+                <MdOutlineArrowRight />
                 <span>
                     Remember users can use each lifeline once during the each contest. Use a given amount of coins
                     from your coin bank or watch an ad for a few secs to use the lifeline for free!

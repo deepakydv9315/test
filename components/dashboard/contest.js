@@ -47,7 +47,7 @@ export default function Contest() {
       // upload image using fetch api
       const formData = new FormData();
       formData.append("img", contest.img);
-      const res = fetch("/api/uploadFile", {
+      const res = await fetch("/api/uploadFile", {
         method: "POST",
         body: formData,
       });
@@ -223,7 +223,6 @@ export default function Contest() {
           </div>
 
           <div className="flex-r upload-contest-pic">
-            {/* icon here  */}
             <FaRegFileImage />
             <input
               onChange={handleChange}
