@@ -70,7 +70,7 @@ export default function Header({ ham, isLogin, balance, showBalance }) {
                     }}
                   >
                     {" "}
-                    <FaTimes />{" "}
+                    <FaTimes className="ham-close" />{" "}
                   </span>
                   <div className="flex-c ham-profile">
                     <Image
@@ -80,14 +80,14 @@ export default function Header({ ham, isLogin, balance, showBalance }) {
                       alt="User avatar"
                     />
                     <span>Welcome!</span>
-                    <span className="sm-text" > { isLogin ? ( <> {mail} </> ) : (<> GUEST </>)} </span>
+                    {/* <span> { isLogin ? ( <> {mail} </> ) : (<> GUEST </>)} </span> */}
                     <span>Play Quiz & earn coins</span>
 
                     {/* For Login Logout Button */}
                     {!isLogin ? (
                       <>
                         <button
-                          className="or-btn"
+                          className="or-btn shine"
                           onClick={(e) => {
                             document.getElementById("ham-menu").style.display =
                               "none";
@@ -100,7 +100,7 @@ export default function Header({ ham, isLogin, balance, showBalance }) {
                     ) : (
                       <>
                         <button
-                          className="or-btn"
+                          className="or-btn shine"
                           onClick={(e) => { 
                             document.getElementById("ham-menu").style.display = "none";
                             document.cookie = "token=; path=/;";
@@ -117,7 +117,7 @@ export default function Header({ ham, isLogin, balance, showBalance }) {
                   <div className="flex-c ham-list">
                     <div className="flex-r">
                       <Link href="/contest-rule">
-                        <a>
+                        <a className="flex-r ham-link border-tp">
                           <Image
                             src={"/media/contest-rules.svg"}
                             width={23.33}
@@ -131,7 +131,7 @@ export default function Header({ ham, isLogin, balance, showBalance }) {
 
                     <div className="flex-r">
                       <Link href="/about-us">
-                        <a>
+                        <a className="flex-r ham-link">
                         <Image
                           src={"/media/about-us.svg"}
                           width={21}
@@ -144,7 +144,7 @@ export default function Header({ ham, isLogin, balance, showBalance }) {
                     </div>
                     <div className="flex-r">
                       <Link href="/contact-us">
-                      <a>
+                      <a className="flex-r ham-link">
                         <Image
                           src={"/media/contact-us.svg"}
                           width={21}
