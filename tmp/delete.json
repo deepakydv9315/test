@@ -1,0 +1,55 @@
+[
+    {
+        "quiz_id": 1,
+        "quiz_name": "Which monument is located in India?",
+        "quizAnswer": 1,
+        "quiz_option_One": "STATUE OF UNITY",
+        "quiz_option_two": "STATUE OF LIBERTY",
+        "quiz_option_four": "STATUE OF PRAGUE",
+        "quiz_option_three": "CHRIST THE REDEEMER"
+    },
+    {
+        "quiz_id": 2,
+        "quiz_name": "Which of these is an art movement?",
+        "quizAnswer": 1,
+        "quiz_option_One": "CUBISM",
+        "quiz_option_two": "ODISSI",
+        "quiz_option_four": "DADA",
+        "quiz_option_three": "KABUKI"
+    },
+    {
+        "quiz_id": 3,
+        "quiz_name": "Which of these is a type of art?",
+        "quizAnswer": 1,
+        "quiz_option_One": "PAINTING",
+        "quiz_option_two": "SCULPTURE",
+        "quiz_option_four": "MUSIC",
+        "quiz_option_three": "DRAWING"
+    }
+]
+
+
+MYSQL_DB = "apayquiz_quiz"
+DB_USER = "apayquiz_quiz"
+DB_PASSWORD = "apayquiz@quiz_123"
+
+[
+    {
+        "quiz_id": 1,
+        "quiz_name": "Who resides at 7, Lok Kalyan Marg?",
+        "quizAnswer": "1",
+        "quiz_option_One": "PRIME MINISTER",
+        "quiz_option_two": "PRESIDENT",
+        "quiz_option_four": "Chief Minister",
+        "quiz_option_three": "GOVERNOR"
+    },
+    {
+        "quiz_id": 2,
+        "quiz_name": "Which of these originated in the USA?",
+        "quizAnswer": "3",
+        "quiz_option_One": "PASTA",
+        "quiz_option_two": "PIZZA",
+        "quiz_option_four": "SAMOSA",
+        "quiz_option_three": "HOT DOG"
+    }
+]
