@@ -2,7 +2,7 @@ import Header from "../components/header/header";
 import Rules from "../components/rules";
 import Head from "next/head";
 
-export default function contest_rule() {
+export default function contest_rule({currentBalance}) {
   return (
     <>
       <Head>
@@ -11,8 +11,10 @@ export default function contest_rule() {
         <link rel="icon" href="/favicon.png" />
       </Head>
 
-      <Header />
-      <Rules />
+      <section className="flex-c mobile contest-rule">
+        <Header back={true} showBalance={true} balance={currentBalance} />
+        <Rules />
+      </section>
     </>
   );
 }

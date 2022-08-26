@@ -6,6 +6,9 @@ import {
   FaPinterestP,
   FaTimes,
 } from "react-icons/fa";
+
+import { BsCaretLeft } from "react-icons/bs";
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -14,7 +17,7 @@ import { useState, useEffect } from "react";
 
 import { decode } from "jsonwebtoken";
 
-export default function Header({ ham, isLogin, balance, showBalance }) {
+export default function Header({ back, isLogin, balance, showBalance }) {
   const [mail, setMail] = useState("");
   const router = useRouter();
 
@@ -51,7 +54,11 @@ export default function Header({ ham, isLogin, balance, showBalance }) {
 
 
               <div className="flex-r gap-15">
-                <div
+                { back ? (<>
+                  <Link href="/"><BsCaretLeft className="wh-text flex-r" style={{ fontWeight : "bold", fontSize : "25px"}} /></Link>
+                </>) 
+                : (<>
+                  <div
                   className="flex-c ham"
                   onClick={(e) => {
                     document.getElementById("ham-menu").style.display = "block";
@@ -61,6 +68,8 @@ export default function Header({ ham, isLogin, balance, showBalance }) {
                   <span className="line"></span>
                   <span className="line"></span>
                 </div>
+                </>)}
+                
 
                 <div id="ham-menu" className="flex-c ham-menu" style={{ display : "none"}}>
                   <span

@@ -9,35 +9,29 @@ export const config = {
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const result = await UploadFile(req)
-    res.status(200).json({ method : req.method , result : result});
-  }
-}
+    const data = await new Promise((resolve, reject) => {
+      const form = new IncomingForm();
 
-
-
-function UploadFile(req, res) {
-  new Promise((resolve, reject) => {
-    const form = new IncomingForm();
-
-    form.parse(req, async (err, fields, files) => {
-      if (err) {
-        reject({
-          success: false,
-          message: err.message,
-        });
-      } else {
-        const oldPath = files.img.filepath,
-
-          newPath = `./public/contest/${
+      form.parse(req, async (err, fields, files) => {
+        if (err) {
+          res.status(200).json({
+            success: false,
+            message: err.message,
+          });
+        } else {
+          // To Create A Directry Variable
+          const randomStr = Math.random().toString(36).substring(7);
+          const oldPath = files.img.filepath;
+          
+          const newPath = `./public/contest/${
             new Date().getMonth() + 1
-          }/${new Date().getDate()}/${files.img.originalFilename}`,
-
-          returnFile = `/contest/${
+          }/${new Date().getDate()}/${randomStr}_${files.img.originalFilename}`;
+          
+          const returnFile = `/contest/${
             new Date().getMonth() + 1
-          }/${new Date().getDate()}/${files.img.originalFilename}`,
-
-          dir = [
+          }/${new Date().getDate()}/${randomStr}_${files.img.originalFilename}`;
+          
+          const dir = [
             `./public/contest/${new Date().getMonth() + 1}`,
 
             `./public/contest/${
@@ -45,23 +39,44 @@ function UploadFile(req, res) {
             }/${new Date().getDate()}`,
           ];
 
-        for (let i = 0; i <= dir.length - 1; i++) {
-          if (!fs.existsSync(dir[i])) {
-            fs.mkdirSync(dir[i]);
+          for (let i = 0; i <= dir.length - 1; i++) {
+            /* fs.exists(dir[i], (exists) => {
+              if (!exists) {
+                fs.mkdir(dir[i], (err) => {
+                  if (err) {
+                    return {
+                      success: false,
+                      message: err.message,
+                    }
+                  }
+                });
+              }
+            }); */
+            for (let i = 0; i <= dir.length - 1; i++) {
+              if (!fs.existsSync(dir[i])) {
+                fs.mkdirSync(dir[i]);
+              }
+            }
           }
+
+          // To Rename The File
+          fs.rename(oldPath, newPath, (err) => {
+            if (err) {
+              res.status(200).json({
+                success: false,
+                message: err.message,
+              });
+            } else {
+              res.status(200).json({
+                success: true,
+                img: returnFile,
+              });
+            }
+          })
+
         }
 
-        fs.rename(oldPath, newPath, (err) => {
-          if (err) {
-            reject({
-              success: false,
-              message: err.message,
-            });
-          } else {
-            resolve({ success: true, img: returnFile });
-          }
-        });
-      }
+      });
     });
-  });
+  }
 }

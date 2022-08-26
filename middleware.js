@@ -28,7 +28,7 @@ export default async function middleware(req, res) {
           ]);
 
           return NextResponse.rewrite(new URL("/login", req.url));
-        } else if (token.id.includes("shivamdwivedi024")) {
+        } else if (token.id.includes("shivamdwivedi024") || token.id.includes("admin@")) {
           return NextResponse.next();
         } else if (token) {
           return NextResponse.rewrite(new URL("/", req.url));

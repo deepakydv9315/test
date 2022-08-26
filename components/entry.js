@@ -11,6 +11,7 @@ export default function Entry({
   entryFees,
   prize,
   currentBalance,
+  img
 }) {
   const router = useRouter();
 
@@ -33,31 +34,14 @@ export default function Entry({
     let expires = "expires=" + d.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
   }
-  /*   
-  async function getCookie(cname) {
-    let name = cname + "=";
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(";");
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == " ") {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-      }
-    }
-    return "";
-  }
-   */
-
+ 
   return (
     <>
       {/*  >>>>>>>>>>>>>>>>>>>>>>> entry  content <<<<<<<<<<<<<<<<<<<<<<<   */}
       <div className="flex-r entry-img-wrapper">
         <span className="entry-img">
           <Image
-            src={"/media/login-img.png"}
+            src={img}
             alt={"Alt Text"}
             width={100}
             height={100}
@@ -69,7 +53,6 @@ export default function Entry({
             <FaCoins className="yl-text" />
             <p>{prize}</p>
           </div>
-          <p>view Rank Breakup</p>
         </span>
       </div>
 
@@ -77,7 +60,7 @@ export default function Entry({
       <div className="flex-c entry-text-wrapper">
         <div className="flex-r entry-list">
           <FaHandPointRight className="bl-text" />
-          <span>You got 90 seconds</span>
+          <span>You got 60 seconds</span>
         </div>
         <div className="flex-r entry-list">
           <FaHandPointRight className="bl-text" />
@@ -86,14 +69,13 @@ export default function Entry({
         <div className="flex-r entry-list">
           <FaHandPointRight className="bl-text" />
           <span>
-            Entry Fee:
+            Entry Fee : 
             {entryFees ? (
               <span>
-                {" "}
-                <FaCoins className="yl-text" /> {entryFees}{" "}
+                {" "}<FaCoins className="yl-text" /> {entryFees}{" "}
               </span>
             ) : (
-              "Free"
+              " Free "
             )}
           </span>
         </div>

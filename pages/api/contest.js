@@ -1,14 +1,5 @@
 import excuteQuery from "../../config/db.js";
 
-import { IncomingForm } from "formidable";
-import fs from "fs";
-
-/* export const config = {
-  api: {
-    bodyParser: false,
-  },
-}; */
-
 export default async function handler(req, res) {
   let msg, req_data;
 
@@ -17,16 +8,24 @@ export default async function handler(req, res) {
       msg = await getContestByType(req.query.type);
 
       res.status(200).json({ method: req.method, message: msg });
-    } else if( req.query.id !== null && req.query.id !== undefined) {
+    } else if (req.query.id !== null && req.query.id !== undefined) {
       msg = await getContestById(req.query.id);
 
       res.status(200).json(msg);
     }
-
   } else if (req.method === "POST") {
-    // msg = postFormParser(req);
+    const data = {
+      announcement: req.body.announcement,
+      contestTitle: req.body.title,
+      contestDate: req.body.contestDate,
+      entryFees: req.body.entryFees,
+      contestIMG: req.body.img,
+      prize: req.body.prize,
+      type: req.body.type,
+      megaQuiz: req.body.megaQuiz,
+    };
 
-    msg = await postContest(req);
+    msg = await postContest(data, res);
 
     res.status(200).json(msg);
   } else if (req.method === "PUT") {
@@ -73,40 +72,25 @@ async function getContestById(id, res) {
   }
 }
 
-async function postContest(req) {
-  let sql, req_data, data, getFieldsFiels, result;
+async function postContest(data, res) {
+  const query_one = "INSERT INTO `contest` SET ? ";
 
-  // getFieldsFiels = await postImage(req);
-  // console.log(getFieldsFiels);
+  const result_one = await excuteQuery({ query: query_one, values: data });
+  if (result_one.affectedRows > 0) {
+    let result_data = {
+      contestID: result_one.insertId,
+      userID: 2,
+    };
+    const query_two = "INSERT INTO `quiz` SET ? ";
 
-  req_data = JSON.parse(req.body);
-  console.log(req_data);
-
-  data = {
-    contestTitle: req_data.title,
-    // contestIMG: getFieldsFiels.img,
-    entryFees: req_data.entryFees,
-    prize: req_data.prize,
-    announcement: req_data.announcement,
-    type: req_data.type,
-    megaQuiz: req_data.megaQuiz,
-  };
-
-  console.log(data);
-
-  sql = "INSERT INTO contest SET ? ";
-
-  result = await excuteQuery({ query: sql, values: data });
-
-  if (result.affectedRows > 0) {
-    sql = "INSERT INTO quiz (`contestID`, `userID`) VALUES (?, ?)";
-
-    result = await excuteQuery({ query: sql, values: [result.insertId, 1] });
-
-    if (result.affectedRows > 0) {
-      return { success: true, contestID: result.insertId };
+    const result_two = await excuteQuery({
+      query: query_two,
+      values: result_data,
+    });
+    if (result_two.affectedRows > 0) {
+      return { success: true, contestID: result_data.contestID };
     } else {
-      return { success: false, message: "Contest Haven't Created" };
+      return { success: false, message: "Quiz Haven't Linked" };
     }
   } else {
     return { success: false, message: "Contest Haven't Created" };
@@ -135,43 +119,4 @@ async function deleteContest(id, res) {
   } else {
     return "Delete Fail";
   }
-}
-
-// Create a async arrow function with name asyncArrow
-
-async function postImage(req) {
-  new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const form = new IncomingForm();
-
-      form.parse(req, (err, _fields, files) => {
-        console.log("Line 129");
-        console.log(files);
-        if (err) {
-          console.log(err);
-          reject("Parser Error");
-        } else {
-          console.log(files);
-          const oldPath = files.img.filepath,
-            newPath = `./public/contest/${new Date().getMonth()}/${new Date().getDate()}/${
-              files.img.originalFilename
-            }`;
-
-          fs.rename(oldPath, newPath, function (err) {
-            if (err) {
-              reject("File Not Uploaded");
-            } else {
-              const img = `/contest/${new Date().getMonth()}/${new Date().getDate()}/${
-                files.img.originalFilename
-              }`;
-
-              resolve({
-                img,
-              });
-            }
-          });
-        }
-      });
-    });
-  }, 4000);
 }

@@ -1,16 +1,8 @@
-import React from "react";
-import Image from "next/image";
 
 export default function About() {
   return (
     <>
-      <section className="flex-c mobile about">
-        <Image
-          src={"/media/about-us-page-image.svg"}
-          width={446}
-          height={542}
-          alt={"About Us Image"}
-        />
+      
         <h1>A Widely Accepted Platform for Fun Seekers</h1>
         <p>
           Apayquiz is a completely new platform for the online games lovers. The
@@ -35,7 +27,6 @@ export default function About() {
           You can even find a fabulous collection of stickman games such as
           Stickman Downhill, Stickman Dirtbike, and Stickman Freeride.
         </p>
-      </section>
     </>
   );
 }

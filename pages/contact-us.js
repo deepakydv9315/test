@@ -3,7 +3,7 @@ import Header from "../components/header/header";
 import Contact from "../components/contact";
 import Head from "next/head";
 
-export default function contest_rule() {
+export default function contest_rule({currentBalance}) {
   return (
     <>
       <Head>
@@ -12,7 +12,7 @@ export default function contest_rule() {
         <link rel="icon" href="/favicon.png" />
       </Head>
 
-      <Header />
+      <Header back={true} showBalance={true} balance={currentBalance} />
       <Contact />
     </>
   );

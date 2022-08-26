@@ -6,6 +6,7 @@ import { JsonWebTokenError } from "jsonwebtoken";
 
 export default function Contest() {
   const [contest, setContest] = useState([]);
+  const [error, setError] = useState(false);
 
   const router = useRouter();
 
@@ -28,6 +29,8 @@ export default function Contest() {
       setContest({ ...contest, type: value });
     } else if (name === "megaQuiz") {
       setContest({ ...contest, megaQuiz: value });
+    } else if( name === "date") {
+      setContest({ ...contest, date: value });
     }
   };
 
@@ -40,96 +43,63 @@ export default function Contest() {
       contest.prize === "" ||
       contest.announcement === "" ||
       contest.type === "" ||
-      contest.megaQuiz === ""
+      contest.megaQuiz === "" ||
+      contest.date === ""
     ) {
-      alert("Please fill in all fields");
+      setError("Please fill in all fields");
+      console.log(error);
     } else {
       // upload image using fetch api
       const formData = new FormData();
       formData.append("img", contest.img);
-      const res = await fetch("/api/uploadFile", {
+      const res = fetch("/api/uploadFile", {
         method: "POST",
         body: formData,
       });
 
-      console.log(res);
-      const data = await res.json();
-      console.log("Data Line No 63 : ");
-      console.log(data);
+      res.then((res) => {
+        res.json().then((data) => {
+          if (data.success) {
+            const send_data = {
+              title: contest.title,
+              img: data.img,
+              entryFees: contest.entryFees,
+              prize: contest.prize,
+              announcement: contest.announcement,
+              type: contest.type,
+              megaQuiz: contest.megaQuiz,
+              contestDate: contest.date,
+            };
 
-/* 
-      if (data.success) {
-        const send_data = {
-          title: contest.title,
-          img: data.img,
-          entryFees: contest.entryFees,
-          prize: contest.prize,
-          announcement: contest.announcement,
-          type: contest.type,
-          megaQuiz: contest.megaQuiz,
-        };
+            const res = fetch("/api/contest", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(send_data),
+            });
 
-        const res = await fetch("/api/contest", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(send_data),
+            res.then((res) => {
+              res.json().then((data) => {
+                if (data.success) {
+                  router.push("/dashboard/addQuiz");
+                } else {
+                  setError(data.message);
+                console.log(data.message);
+                }
+              }).catch((err) => {
+                setError(err.message);
+                console.log(err.message);
+              });
+            });
+          }
+        }).catch((err) => {
+          setError(err.message);
+          console.log(err.message);
         });
-
-        const data = await res.json();
-        if (data.success) {
-          alert("Contest created successfully");
-          // router.push("/");
-        } else {
-          alert(data.message);
-        }
-      } else {
-        alert(data.message);
-      }
- */
+      });
     }
-
-    /* let res = fetch("/api/uploadFile", {
-        method: "POST",
-        body: JSON.stringify({ test: "Hi", img : contest.img})
-      });
-
-      res.then((res) => {
-        if (res.status == 200) {
-          res.json().then((data) => {
-            if (data.success == true) {
-              console.log(data.message);
-            } else {
-              console.log(data.message);
-            }
-          });
-        } else {
-          console.log("Something went wrong");
-        }
-      }); */
-
-    /* 
-      let res = fetch("/api/contest", {
-        method: "POST",
-        headers: {
-          // "Content-Type": "multipart/form-data",
-        },
-        body: JSON.stringify(contest),
-      });
-
-      res.then((res) => {
-        if (res.status == 200) {
-          res.json().then((data) => {
-            if (data.success == true) {
-              console.log(data);
-               router.push("/dashboard/addQuiz");
-            }
-          });
-        }
-      });
- */
-  };
+  }
 
   return (
     <>
@@ -145,6 +115,7 @@ export default function Contest() {
               placeholder="Contest Title..."
               /* required */
             />
+            <span> {contest.title } </span> 
             <input
               onChange={handleChange}
               type="text"
@@ -153,6 +124,7 @@ export default function Contest() {
               placeholder="Contest Prize..."
               /* required */
             />
+            <span> {contest.prize } </span>
             <input
               onChange={handleChange}
               type="text"
@@ -161,6 +133,7 @@ export default function Contest() {
               placeholder="Entry Fees..."
               /* required */
             />
+            <span> {contest.entryFees } </span>
             <input
               onChange={handleChange}
               type="date"
@@ -168,6 +141,7 @@ export default function Contest() {
               className="contest-info"
               /* required */
             />
+            <span> { contest.date } </span>
             <input
               onChange={handleChange}
               type="time"
@@ -175,6 +149,7 @@ export default function Contest() {
               className="contest-info"
               /* required */
             />
+            <span> {contest.announcement } </span>
           </div>
 
           <div className="flex-r contest-cat">
@@ -199,6 +174,7 @@ export default function Contest() {
                 <span>OFF</span>
               </div>
             </div>
+            <span> { contest.megaQuiz } </span>
             <div className="flex-c">
               <span>Quiz cat.</span>
               <div className="flex-r input-box">
@@ -220,6 +196,7 @@ export default function Contest() {
                 <span>Quiz</span>
               </div>
             </div>
+            <span> { contest.type } </span>
           </div>
 
           <div className="flex-r upload-contest-pic">

@@ -412,11 +412,11 @@ nav {
   font-weight: 500;
   font-size: 18px;
 }
-.right-num,
+/* .right-num,
 .wrong-num {
   border: 1px solid black;
   gap: 0px 5px;
-}
+} */
 
 .clock {
   border: 4px solid var(--dark-yl);
